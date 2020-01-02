@@ -1,0 +1,2 @@
+C:\Users\appedu\Desktop\unity_3D\unity_3D Legend\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\appedu\Desktop\unity_3D\unity_3D Legend\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
