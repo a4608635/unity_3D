@@ -55,11 +55,15 @@ public class RandomSkill : MonoBehaviour
         btn.interactable = false;                       // 按鈕無法點選
 
         // 迴圈
-        for (int i = 0; i < spriteBlurs.Length; i++)
+        for (int J = 0; J < count; J++)
         {
-            img.sprite = spriteBlurs[i];                // 圖片元件.圖片 = 模糊圖片陣列[編號]
-            aud.PlayOneShot(soundScroll, 0.2F);
-            yield return new WaitForSeconds(speed);     // 等待
+            for (int i = 0; i < spriteBlurs.Length; i++)
+            {
+                img.sprite = spriteBlurs[i];                // 圖片元件.圖片 = 模糊圖片陣列[編號]
+                aud.PlayOneShot(soundScroll, 0.2F);
+                yield return new WaitForSeconds(speed);     // 等待
+            }
+            
         }
 
         index = Random.Range(0, spriteSkills.Length);   // 隨機值 = 隨機(最小值,最大值)
