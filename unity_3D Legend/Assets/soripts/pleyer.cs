@@ -8,8 +8,10 @@ public class pleyer : MonoBehaviour
 
     public Rigidbody rig;
     public FixedJoystick joystick;
-    public Animator ani;// 動畫控制器元件
-    public Transform tra;
+    public Animator ani;                    // 動畫控制器元件
+    public Transform tra;                   // 目標物件
+    private LevelManager levelManager;
+
     
 
     private void Start()
@@ -17,14 +19,25 @@ public class pleyer : MonoBehaviour
         rig = GetComponent<Rigidbody>();
         ani = GetComponent<Animator>();// 取得元件<動畫控制器>()
         joystick = GameObject.Find("虛擬搖桿").GetComponent<FixedJoystick>();
+
         //tra = GameObject.Find("目標").GetComponent<Transform>(); 以下簡寫
         tra = GameObject.Find("目標").transform;
-        
+
+        levelManager = FindObjectOfType<LevelManager>();        // 透過類行尋找物件(場景上只有一個)
     }
     // 一秒執行50次-用來處理物理系統
     private void FixedUpdate()
     {
         Move();
+    }
+
+    // 碰到物件身上有 IsTrigger 碰撞器執行一次
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.name == "傳送區域")
+        {
+            　StartCoroutine(levelManager.NextLevel());    // 協程辦法必須用啟動協程
+        }
     }
 
     private void Move()
