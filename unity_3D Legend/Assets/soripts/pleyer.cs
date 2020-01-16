@@ -1,18 +1,17 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 public class pleyer : MonoBehaviour
 {
     [Header("速度與激情"), Range(0, 1000)]
     public float speed = 1;
+    [Header("玩家資料")]
+    public PleyerData data;
 
-    public Rigidbody rig;
-    public FixedJoystick joystick;
-    public Animator ani;                    // 動畫控制器元件
-    public Transform tra;                   // 目標物件
+    private Rigidbody rig;
+    private FixedJoystick joystick;
+    private Animator ani;                    // 動畫控制器元件
+    private Transform tra;                   // 目標物件
     private LevelManager levelManager;
-
-    
 
     private void Start()
     {
@@ -59,5 +58,10 @@ public class pleyer : MonoBehaviour
         Vector3 porAT = new Vector3(tra.position.x, transform.position.y, tra.position.z);
         transform.LookAt(porAT);
         
+    }
+
+    public void Hit(float damage)
+    {
+        data.hp -= damage;
     }
 }

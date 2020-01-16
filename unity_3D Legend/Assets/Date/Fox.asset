@@ -9,14 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a654f0afc4e0b24f9e1f0b0a6d51068, type: 3}
-  m_Name: "\u6BAD\u5C4D"
+  m_Script: {fileID: 11500000, guid: 5b9909a39fd885d44bd61c1a9b17997c, type: 3}
+  m_Name: Fox
   m_EditorClassIdentifier: 
-  speed: 1.5
-  hp: 5000
-  attack: 10
-  cd: 2
-  stopDistance: 1.5
-  attackY: 1
-  attackLength: 1.7
-  attackDelay: 0.35
+  hp: 200
+  hpmax: 200

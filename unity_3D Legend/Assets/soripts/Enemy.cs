@@ -9,10 +9,11 @@ public class Enemy : MonoBehaviour
     [Header("怪物資料")]
     public EnemyData data;
 
-    private Animator ani;          // 動畫控制器       
+    private Animator ani;           // 動畫控制器       
     private NavMeshAgent nav;       // 導覽網隔代理器
 
     private Transform tra;          // 玩家變形
+    private float timer;            // 計時器
 
     private void Start()
     {
@@ -34,7 +35,13 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Wait()
     {
-
+        ani.SetBool("跑步開關",false);
+        timer += Time.deltaTime;
+        // print("計時器" + timer);
+        if (timer>=data.cd)
+        {
+            Attack();
+        }
     }
 
     /// <summary>
@@ -46,17 +53,29 @@ public class Enemy : MonoBehaviour
         posTra.y = transform.position.y;        // 三維向量.y = 本身.y
         transform.LookAt(posTra);               // 變形.看著(三維向量)
 
-        ani.SetBool("跑步開關", true);
+        nav.SetDestination(tra.position);       // 代理器.設定目的地(玩家)
 
-        nav.SetDestination(tra.position);       // 代理器.設定目的地(玩家
+        // print("剩餘距離" + nav.remainingDistance);
+
+        if (nav.remainingDistance<data.stopDistance)        // 剩餘距離<資料.停止距離
+        {
+            Wait();
+        }
+        else
+        {
+            ani.SetBool("跑步開關", true);
+        }
     }
 
+    // protected 保護:允許子類別存取，禁止外部類別存取
+    // virtual 虛擬:允許子類別複寫
     /// <summary>
     /// 攻擊
     /// </summary>
-    private void Attack()
+    protected  virtual void Attack()
     {
-
+        ani.SetBool("攻擊觸發", true);
+        timer = 0;
     }
 
     /// <summary>
