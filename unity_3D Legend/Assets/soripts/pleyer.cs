@@ -11,7 +11,8 @@ public class pleyer : MonoBehaviour
     private FixedJoystick joystick;
     private Animator ani;                    // 動畫控制器元件
     private Transform tra;                   // 目標物件
-    private LevelManager levelManager;
+    private LevelManager levelManager;       // 關卡管理器
+    private HpValueManager hpvalueManager;   // 血條數值管理器
 
     private void Start()
     {
@@ -22,12 +23,14 @@ public class pleyer : MonoBehaviour
         //tra = GameObject.Find("目標").GetComponent<Transform>(); 以下簡寫
         tra = GameObject.Find("目標").transform;
 
-        levelManager = FindObjectOfType<LevelManager>();        // 透過類行尋找物件(場景上只有一個)
+        levelManager = FindObjectOfType<LevelManager>();            // 透過類行尋找物件(場景上只有一個)
+        hpvalueManager = GetComponentInChildren<HpValueManager>();  // 取得子物件元件
     }
     // 一秒執行50次-用來處理物理系統
     private void FixedUpdate()
     {
         Move();
+        Death();
     }
 
     // 碰到物件身上有 IsTrigger 碰撞器執行一次
@@ -60,8 +63,19 @@ public class pleyer : MonoBehaviour
         
     }
 
+
     public void Hit(float damage)
     {
         data.hp -= damage;
+        hpvalueManager.SetHp(data.hp, data.hpmax);
+        StartCoroutine(hpvalueManager.Showvalue(damage, "-", Color.white));
+    }
+    
+    public void Death()
+    {
+        if (data.hp <= 0)
+        {
+            ani.SetBool("死亡開關",true);
+        }
     }
 }
