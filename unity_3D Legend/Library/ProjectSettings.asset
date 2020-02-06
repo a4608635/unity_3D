@@ -645,10 +645,10 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: e1ef8cce-f990-43ba-bac3-e77f5931de0f
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: unity_3D Legend
+  organizationId: agfeuft
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

@@ -30,7 +30,7 @@ public class pleyer : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-        Death();
+        
     }
 
     // 碰到物件身上有 IsTrigger 碰撞器執行一次
@@ -42,6 +42,9 @@ public class pleyer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 移動
+    /// </summary>
     private void Move()
     {
         float h = joystick.Horizontal;
@@ -63,19 +66,28 @@ public class pleyer : MonoBehaviour
         
     }
 
-
+    /// <summary>
+    /// 受傷
+    /// </summary>
+    /// <param name="damage">傷害值</param>
     public void Hit(float damage)
     {
+        if (ani.GetBool("死亡開關")) return;                                    // 如果 死亡開關 是勾選 跳出
         data.hp -= damage;
-        hpvalueManager.SetHp(data.hp, data.hpmax);
-        StartCoroutine(hpvalueManager.Showvalue(damage, "-", Color.white));
+        hpvalueManager.SetHp(data.hp, data.hpmax);                              // 更新血量(目前，最大)
+        StartCoroutine(hpvalueManager.Showvalue(damage, "-", Color.white));     // 啟動協程
+        if (data.hp <= 0) Death();
     }
-    
+
+    /// <summary>
+    /// 死亡
+    /// </summary>
     public void Death()
     {
-        if (data.hp <= 0)
-        {
-            ani.SetBool("死亡開關",true);
-        }
+        
+        ani.SetBool("死亡開關",true);       // 死亡腳本
+        enabled = false;                    // 關閉此腳本(this 可省略)
+
+        StartCoroutine(levelManager.ShowRevival());
     }
 }
