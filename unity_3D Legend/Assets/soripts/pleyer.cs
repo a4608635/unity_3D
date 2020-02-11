@@ -63,6 +63,8 @@ public class pleyer : MonoBehaviour
 
         Vector3 porAT = new Vector3(tra.position.x, transform.position.y, tra.position.z);
         transform.LookAt(porAT);
+
+        if (v == 0 && h == 0) Attack();
         
     }
 
@@ -89,5 +91,22 @@ public class pleyer : MonoBehaviour
         enabled = false;                    // 關閉此腳本(this 可省略)
 
         StartCoroutine(levelManager.ShowRevival());
+    }
+
+    /// <summary>
+    /// 復活
+    /// </summary>
+    public void Revival()
+    {
+        enabled = true;                                     // 開起此腳本(this 可省略)
+        ani.SetBool("死亡開關", false);                     // 死亡腳本
+        data.hp = data.hpmax;                               // 恢復血量
+        hpvalueManager.SetHp(data.hp, data.hpmax);          // 更新血量(目前，最大)
+        levelManager.HideRevival();
+    }
+
+    public void Attack()
+    {
+        ani.SetBool("攻擊觸發", true);
     }
 }
