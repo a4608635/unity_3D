@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: "\u6BAD\u5C4D"
   m_EditorClassIdentifier: 
   speed: 1.5
-  hp: 5000
+  hp: -21700
+  hpmax: 0
   attack: 100
   cd: 2
   stopDistance: 1.5
   attackY: 1
   attackLength: 1.7
   attackDelay: 0.35
+  attackZ: 0
+  bulletPower: 0

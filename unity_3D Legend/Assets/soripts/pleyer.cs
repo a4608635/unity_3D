@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Linq;      // 引用 查詢API - Min、Max 與 ToList 
 
 public class pleyer : MonoBehaviour
 {
@@ -6,6 +7,8 @@ public class pleyer : MonoBehaviour
     public float speed = 1;
     [Header("玩家資料")]
     public PleyerData data;
+    [Header("子彈")]
+    public GameObject bullet;
 
     private Rigidbody rig;
     private FixedJoystick joystick;
@@ -13,6 +16,10 @@ public class pleyer : MonoBehaviour
     private Transform tra;                   // 目標物件
     private LevelManager levelManager;       // 關卡管理器
     private HpValueManager hpvalueManager;   // 血條數值管理器
+    private Vector3 posBullet;               // 子彈座標
+    private float timer;                     // 計時器
+    private Enemy[]enemys;                   // 敵人陣列[]:存放所有敵人
+    private float[] enemysDis;               // 距離震裂[]:存放所有敵人距離
 
     private void Start()
     {
@@ -105,8 +112,54 @@ public class pleyer : MonoBehaviour
         levelManager.HideRevival();
     }
 
+    /// <summary>
+    /// 攻擊
+    /// </summary>
     public void Attack()
     {
-        ani.SetBool("攻擊觸發", true);
+        if (timer < data.cd)                // 如果 計時器 < CD
+        {
+            timer += Time.deltaTime;        // 計時器累加
+        }
+        else
+        {
+            timer = 0;                      // 計時器歸零
+            ani.SetBool("攻擊觸發", true);  // 攻擊
+
+            // 1.取得所有敵人
+            enemys = FindObjectsOfType<Enemy>();
+            // 2.取的所有敵人的距離
+            enemysDis = new float[enemys.Length];       // 距離陣列 = 新的 浮點數陣列[敵人陣列.數量]
+
+            for (int i = 0; i < enemys.Length; i++)
+            {
+                enemysDis[i] = Vector3.Distance(transform.position, enemys[i].transform.position);
+            }
+            // 3.判斷誰最近與面相
+            float min = enemysDis.Min();                    // 距離陣列.最小值()
+            int index = enemysDis.ToList().IndexOf(min);    // 距離陣列.轉為清單().取得資料的編號(資料) - 清單才能使用
+            Vector3 enemyPos = enemys[index].transform.position;
+            enemyPos.y = transform.position.y;
+            transform.LookAt(enemyPos);
+            //發射武器
+            posBullet = transform.position + transform.forward * data.attackZ + transform.up * data.attackY;    // 子彈座標 = 飛龍.座標 + 飛龍前方 * Z + 飛龍上方 * Y
+            Vector3 angle = transform.eulerAngles;                                                              // 三維向量 玩家角度 = 變型.歐拉角度(0-360度)
+            Quaternion qua = Quaternion.Euler(angle.x + 0, angle.y, angle.z);                                   // 四元角度 = 四元.歐拉() - 歐拉轉為四元角度
+            GameObject temp = Instantiate(bullet, posBullet, qua);                               // 區域變數 = 生成(物件，座標，角度)
+            temp.GetComponent<Rigidbody>().AddForce(transform.forward * data.bulletPower);                      // 取得鋼體.推力(敵人前方 * 力道)
+            temp.AddComponent<Bullet>();                                                                        // 區域變數.添加物件<任意物件>();
+            temp.GetComponent<Bullet>().damage = data.attack;                                                   // 區域變數.取得物件<任意物件>().傷害值 = 資料.攻擊力
+            temp.GetComponent<Bullet>().player = true;                                                   // 區域變數.取得物件<任意物件>().傷害值 = 資料.攻擊力
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        // 圖示.顏色 = 顏色
+        Gizmos.color = Color.red;
+        // 子彈座標 = 飛龍.座標 + 飛龍前方 * Z + 飛龍上方 * Y
+        posBullet = transform.position + transform.forward * data.attackZ + transform.up * data.attackY;
+        // 圖示.繪製球體(中心點，半徑)
+        Gizmos.DrawSphere(posBullet, 0.1f);
     }
 }

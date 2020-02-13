@@ -5,6 +5,7 @@ public class EnemyFar : Enemy
 {
     [Header("子彈")]
     public GameObject bullet;
+    private Vector3 posBullet;      // 子彈座標
 
     protected override void Attack()
     {
@@ -22,9 +23,8 @@ public class EnemyFar : Enemy
 
         temp.AddComponent<Bullet>();                                                        // 區域變數.添加物件<任意物件>();
         temp.GetComponent<Bullet>().damage = data.attack;                                   // 區域變數.取得物件<任意物件>().傷害值 = 資料.攻擊力
+        temp.GetComponent<Bullet>().player = false;                                   // 區域變數.取得物件<任意物件>().傷害值 = 資料.攻擊力
     }
-
-    private Vector3 posBullet;      // 子彈座標
 
     private void OnDrawGizmos()
     {

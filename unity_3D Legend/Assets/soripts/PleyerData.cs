@@ -7,4 +7,13 @@ public class PleyerData : ScriptableObject
     public float hp;
     [Header("最大血量")]
     public float hpmax;
+    [Header("子彈位移")]
+    public float attackY;
+    public float attackZ;
+    [Header("攻擊冷卻時間"), Range(0, 1.5F)]
+    public float cd;
+    [Header("子彈推力")]
+    public float bulletPower;
+    [Header("攻擊力")]
+    public float attack;
 }

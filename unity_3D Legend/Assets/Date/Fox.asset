@@ -12,5 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b9909a39fd885d44bd61c1a9b17997c, type: 3}
   m_Name: Fox
   m_EditorClassIdentifier: 
-  hp: -1950
+  hp: 85750
   hpmax: 200
+  attackY: 1.16
+  attackZ: 1
+  cd: 0.7
+  bulletPower: 1500
+  attack: 100
