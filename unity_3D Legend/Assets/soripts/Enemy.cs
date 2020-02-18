@@ -7,8 +7,9 @@ using UnityEngine.AI;       // 引用 人工智慧 API
 public class Enemy : MonoBehaviour
 {
     [Header("怪物資料")]
-    public EnemyData data;
+    public EnemyData data;                   // 腳本化物件：所有實體物件共用
 
+    private float hp;                        // 怪物血量
     private Animator ani;                    // 動畫控制器       
     private NavMeshAgent nav;                // 導覽網隔代理器
     private Transform tra;                   // 玩家變形
@@ -22,6 +23,7 @@ public class Enemy : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();     
         nav.speed = data.speed;                 // 調整 代理器.速度
         nav.stoppingDistance = data.stopDistance;
+        hp = data.hp;
 
         hpvalueManager = GetComponentInChildren<HpValueManager>();  // 取得子物件元件
         tra = GameObject.Find("Fox").GetComponent<Transform>();     // 取得玩家變形
@@ -51,6 +53,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Move()
     {
+        if (ani.GetBool("死亡開關")) return;
+
         Vector3 posTra = tra.position;          // 區域三維向量 = 目標.座標
         posTra.y = transform.position.y;        // 三維向量.y = 本身.y
         transform.LookAt(posTra);               // 變形.看著(三維向量)
@@ -87,10 +91,10 @@ public class Enemy : MonoBehaviour
     public void Hit(float damage)
     {
         if (ani.GetBool("死亡開關")) return;                                    // 如果 死亡開關 是勾選 跳出
-        data.hp -= damage;
-        hpvalueManager.SetHp(data.hp, data.hpmax);                              // 更新血量(目前，最大)
+        hp -= damage;
+        hpvalueManager.SetHp(hp, data.hpmax);                              // 更新血量(目前，最大)
         StartCoroutine(hpvalueManager.Showvalue(damage, "-", Color.white));     // 啟動協程
-        if (data.hp <= 0) Death();
+        if (hp <= 0) Death();
     }
 
     /// <summary>
@@ -98,6 +102,23 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Death()
     {
+        ani.SetBool("死亡開關", true);      // 死亡動畫
+        nav.isStopped = true;               // 代理器 停止
+        Destroy(this);                      // Destroy(GetComponent<元件>)); 刪除元件
+        createCoin();
+    }
 
+    [Header("金幣")]
+    public GameObject coin;
+
+    private void createCoin()
+    {
+
+        int r = (int)Random.Range(data.coinRange.x, data.coinRange.y);
+
+        for (int i = 0; i < r; i++)
+        {
+            Instantiate(coin, transform.position + transform.up * 2, transform.rotation);
+        }
     }
 }

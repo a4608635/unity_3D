@@ -93,7 +93,6 @@ public class pleyer : MonoBehaviour
     /// </summary>
     public void Death()
     {
-        
         ani.SetBool("死亡開關",true);       // 死亡腳本
         enabled = false;                    // 關閉此腳本(this 可省略)
 
@@ -123,11 +122,17 @@ public class pleyer : MonoBehaviour
         }
         else
         {
-            timer = 0;                      // 計時器歸零
-            ani.SetBool("攻擊觸發", true);  // 攻擊
-
             // 1.取得所有敵人
             enemys = FindObjectsOfType<Enemy>();
+            // 過關
+            if (enemys.Length == 0)
+            {
+                levelManager.Pass();
+                return;
+            }
+
+            timer = 0;                      // 計時器歸零
+            ani.SetBool("攻擊觸發", true);  // 攻擊
             // 2.取的所有敵人的距離
             enemysDis = new float[enemys.Length];       // 距離陣列 = 新的 浮點數陣列[敵人陣列.數量]
 

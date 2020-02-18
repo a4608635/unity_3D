@@ -47,7 +47,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void Skill()
     {
-        skill.SetActive(true);
+        //skill.SetActive(true);
     }
     /// <summary>
     /// 顯示燈光、開門
@@ -57,7 +57,10 @@ public class LevelManager : MonoBehaviour
         objLight.SetActive(true);
         aniDoor.SetTrigger("開門處發");
     }
-
+    /// <summary>
+    /// 載入下一關
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator NextLevel()
     {
         print("載入下一關");
@@ -69,7 +72,10 @@ public class LevelManager : MonoBehaviour
         }
         SceneManager.LoadScene("關卡2");
     }
-
+    /// <summary>
+    /// 顯示復活畫面
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator ShowRevival()
     {
         panelRevival.SetActive(true);
@@ -81,11 +87,28 @@ public class LevelManager : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
     }
-
+    /// <summary>
+    /// 關閉復活畫面
+    /// </summary>
     public void HideRevival()
     {
         StopCoroutine(ShowRevival());       // 停止協程
         panelRevival.SetActive(false);
     }
+    /// <summary>
+    /// 過關：開門、叫金幣前往玩家位置
+    /// </summary>
+    public void Pass()
+    {
+        OpenDoor();                                     // 呼叫開門
+
+        Item[] items = FindObjectsOfType<Item>();       // 取得所有道具
+
+        for (int i = 0; i < items.Length; i++)          // 迴圈跑每一個道具
+        {
+            items[i].pass = true;                       // 每個道具.過關 = 勾選
+        }
+    }
+
 
 }
