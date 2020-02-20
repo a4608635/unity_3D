@@ -13,7 +13,7 @@ public class AdManager : MonoBehaviour,IUnityAdsListener
 
     private void Start()
     {
-        Advertisement.Initialize(googleID, true);       // 廣告.初始化(廣告ID,是否啟動測試)
+        Advertisement.Initialize(googleID, false);       // 廣告.初始化(廣告ID,是否啟動測試)
         Advertisement.AddListener(this);                // 廣告.增加監聽者(此腳本)
         pleyer = FindObjectOfType<pleyer>();
     }
@@ -50,14 +50,14 @@ public class AdManager : MonoBehaviour,IUnityAdsListener
             switch (showResult)                     // switch 判斷式
             {
                 case ShowResult.Failed:             // 第一種可能
-                    print("失敗");
+                    //print("失敗");
                     break;
                 case ShowResult.Skipped:            // 第二種可能
-                    print("略過");
+                    //print("略過");
                     break;
                 case ShowResult.Finished:           // 第三種可能
-                    print("完成");
-                    pleyer.Revival();
+                    //print("完成");
+                    GameObject.Find("Fox").GetComponent<pleyer>().Revival();
                     break;
             }
         }

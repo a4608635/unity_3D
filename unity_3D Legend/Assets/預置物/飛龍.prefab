@@ -95,7 +95,7 @@ Transform:
   m_GameObject: {fileID: 2120993753271483916}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0.6097784, y: 0.06678343, z: 2.7897606}
-  m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2120993753271772138}
   - {fileID: 2120993753271772142}
@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: b1653856962b5a54db8addf46468d3b7, type: 2}
-  coin: {fileID: 0}
+  coin: {fileID: 8239825182277356766, guid: 838fd36c91193724dae1fc5af6c8182f, type: 3}
   bullet: {fileID: 3937851162549303263, guid: 460a5da53d5338748b40341255e9a71a, type: 3}
 --- !u!1 &2120993753271483918
 GameObject:

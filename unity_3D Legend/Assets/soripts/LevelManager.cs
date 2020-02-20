@@ -5,6 +5,7 @@ using System.Collections;
 
 public class LevelManager : MonoBehaviour
 {
+    [Header("隨機技能與光照")]
     public GameObject skill;        // 隨機技能 (遊戲物件)
     public GameObject objLight;     // 光照 (遊戲物件)
 
@@ -29,7 +30,7 @@ public class LevelManager : MonoBehaviour
         if (autoShowSkill) Skill();
 
         // 如果 是 自動開門 延遲呼叫 開門方法
-        if (autoOpenDoor) Invoke("OpenDoor", 5);
+        // if (autoOpenDoor) Invoke("OpenDoor", 5);
 
         // 延遲調用("方法名稱",延遲時間)
         // Invoke("OpenDoor",0,1.5F);
@@ -70,7 +71,18 @@ public class LevelManager : MonoBehaviour
             imgCross.color += new Color(0, 0, 0, 0.02f);
             yield return new WaitForSeconds(0.05f);
         }
-        SceneManager.LoadScene("關卡2");
+
+        if (SceneManager.GetActiveScene().name.Contains("BOSS"))
+        {
+            SceneManager.LoadScene(0);
+        }
+        else
+        {
+            int index = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(++index);
+        }
+
+        
     }
     /// <summary>
     /// 顯示復活畫面
