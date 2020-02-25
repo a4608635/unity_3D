@@ -44,7 +44,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 1
+  m_GIWorkflowMode: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -522,6 +522,10 @@ PrefabInstance:
     - target: {fileID: 2039179653184937, guid: 2bfda1297692a434baa39c57be697c99, type: 3}
       propertyPath: m_Name
       value: "\u969C\u7919\u7269 3_2"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2039179653184937, guid: 2bfda1297692a434baa39c57be697c99, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1958173101439243270, guid: 2bfda1297692a434baa39c57be697c99,
         type: 3}
@@ -2443,7 +2447,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2286
+  m_Name: pb_Mesh-42106
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
